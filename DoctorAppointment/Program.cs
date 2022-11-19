@@ -14,6 +14,13 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<DoctorAppointmentContext>();
 builder.Services.AddControllersWithViews();
 
+// enable Google auth, reading keys from appsettings.json or Azure Config section
+//builder.Services.AddAuthentication()
+//    .AddGoogle(options =>
+//    {
+//        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+//        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+//    });
 // Support for session
 builder.Services.AddSession();
 var app = builder.Build();

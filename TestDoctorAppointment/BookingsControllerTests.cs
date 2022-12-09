@@ -3,7 +3,7 @@ using DoctorAppointment.Data;
 using DoctorAppointment.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TestDoctorAppointment
 {
@@ -50,10 +50,35 @@ namespace TestDoctorAppointment
         }
 
 
+        //Index
         [TestMethod]
-        public void TestMethod1()
+        public void IndexLoadsBookings()
         {
+            // act
+            var result = (ViewResult)controller.Index().Result;
+            List<Booking> model = (List<Booking>)result.Model;
 
+            // assert
+            CollectionAssert.AreEqual(context.Booking.ToList(), model);
+        }
+        //Details
+        [TestMethod]
+        public void DetailsValidIdLoadsView()
+        {
+            // act
+            var result = (ViewResult)controller.Details(104).Result;
+
+            // assert 
+            Assert.AreEqual(context.Booking.Find(104), result.Model);
+        }
+        [TestMethod]
+        public void DetailsNullIdLoadsError()
+        {
+            context.Booking = null;
+            var result = (ViewResult)controller.Details(null).Result;
+
+            // assert 
+            Assert.AreEqual("404", result.ViewName);
         }
     }
 }

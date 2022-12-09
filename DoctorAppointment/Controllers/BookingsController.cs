@@ -34,7 +34,7 @@ namespace DoctorAppointment.Controllers
         {
             if (id == null || _context.Booking == null)
             {
-                return NotFound();
+                return View("404");
             }
 
             var booking = await _context.Booking
